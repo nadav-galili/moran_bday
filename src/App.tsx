@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./App.css";
 
@@ -10,14 +10,8 @@ import { StatsModal } from "./components/StatsModal";
 import { DarkModeToggle } from "./components/DarkModeToggle";
 
 // Types and utilities
-import type { Memory, MemoryType, MemoryCategory } from "./types/Memory";
-import {
-  filterMemoriesByDecade,
-  searchMemories,
-  filterMemoriesByType,
-  filterMemoriesByCategory,
-  exportMemoriesToJSON,
-} from "./utils/memoryUtils";
+import type { Memory } from "./types/Memory";
+import { filterMemoriesByDecade } from "./utils/memoryUtils";
 import { useDarkMode } from "./hooks/useDarkMode";
 
 const sampleMemories: Memory[] = [
@@ -196,48 +190,14 @@ function App() {
   const [memories, setMemories] = useState<Memory[]>(sampleMemories);
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [currentDecade, setCurrentDecade] = useState("2000s");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedType, setSelectedType] = useState<MemoryType | "all">("all");
-  const [selectedCategory, setSelectedCategory] = useState<
-    MemoryCategory | "all"
-  >("all");
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useDarkMode();
   const timelineRef = useRef<HTMLDivElement>(null);
 
-  // Filter memories based on all criteria
-  const filteredMemories = useMemo(() => {
-    let filtered = [...memories];
-
-    // Filter by search query
-    if (searchQuery) {
-      filtered = searchMemories(filtered, searchQuery);
-    }
-
-    // Filter by type
-    filtered = filterMemoriesByType(filtered, selectedType);
-
-    // Filter by category
-    filtered = filterMemoriesByCategory(filtered, selectedCategory);
-
-    // Filter by favorites
-    if (showFavoritesOnly) {
-      filtered = filtered.filter((memory) => memory.isFavorite);
-    }
-
-    return filtered;
-  }, [
-    memories,
-    searchQuery,
-    selectedType,
-    selectedCategory,
-    showFavoritesOnly,
-  ]);
-
   // Get current decade memories
   const getCurrentDecadeMemories = () => {
-    return filterMemoriesByDecade(filteredMemories, currentDecade);
+    return filterMemoriesByDecade(memories, currentDecade);
   };
 
   // Navigation handlers
@@ -266,10 +226,6 @@ function App() {
         prev ? { ...prev, isFavorite: !prev.isFavorite } : null
       );
     }
-  };
-
-  const handleExport = () => {
-    exportMemoriesToJSON(filteredMemories);
   };
 
   // Smooth scroll to decade
@@ -334,21 +290,7 @@ function App() {
           isDarkMode={isDarkMode}
         /> */}
         {/* Results Summary */}
-        {(searchQuery ||
-          selectedType !== "all" ||
-          selectedCategory !== "all" ||
-          showFavoritesOnly) && (
-          <div
-            className={`text-center mb-6 p-4 rounded-lg ${
-              isDarkMode ? "bg-gray-800" : "bg-white"
-            } shadow-md`}>
-            <p className={`${isDarkMode ? "text-gray-200" : "text-gray-700"}`}>
-              נמצאו {filteredMemories.length} זכרונות
-              {getCurrentDecadeMemories().length !== filteredMemories.length &&
-                ` (${getCurrentDecadeMemories().length} בעשור הנוכחי)`}
-            </p>
-          </div>
-        )}
+
         {/* Decade Navigation */}
         <div className="flex items-center justify-center mb-8">
           <button
@@ -445,7 +387,7 @@ function App() {
         {/* Stats Modal */}
         {showStatsModal && (
           <StatsModal
-            memories={filteredMemories}
+            memories={memories}
             onClose={() => setShowStatsModal(false)}
             isDarkMode={isDarkMode}
           />
