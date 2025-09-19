@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { Search, Filter, X, Download, BarChart3 } from 'lucide-react';
-import type { MemoryType, MemoryCategory } from '../types/Memory';
+import { useState } from "react";
+import { Search, Filter, X, Download, BarChart3 } from "lucide-react";
+import type { MemoryType, MemoryCategory } from "../types/Memory";
 
 interface SearchAndFiltersProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  selectedType: MemoryType | 'all';
-  onTypeChange: (type: MemoryType | 'all') => void;
-  selectedCategory: MemoryCategory | 'all';
-  onCategoryChange: (category: MemoryCategory | 'all') => void;
+  selectedType: MemoryType | "all";
+  onTypeChange: (type: MemoryType | "all") => void;
+  selectedCategory: MemoryCategory | "all";
+  onCategoryChange: (category: MemoryCategory | "all") => void;
   showFavoritesOnly: boolean;
   onToggleFavoritesOnly: () => void;
   onExport: () => void;
@@ -16,22 +16,26 @@ interface SearchAndFiltersProps {
   isDarkMode?: boolean;
 }
 
-const memoryTypes: { value: MemoryType | 'all'; label: string; emoji: string }[] = [
-  { value: 'all', label: 'הכל', emoji: '📝' },
-  { value: 'milestone', label: 'אבני דרך', emoji: '🎯' },
-  { value: 'photo', label: 'תמונות', emoji: '📸' },
-  { value: 'video', label: 'סרטונים', emoji: '🎥' },
-  { value: 'story', label: 'סיפורים', emoji: '📖' },
-  { value: 'audio', label: 'הקלטות', emoji: '🎵' }
+const memoryTypes: {
+  value: MemoryType | "all";
+  label: string;
+  emoji: string;
+}[] = [
+  { value: "all", label: "הכל", emoji: "📝" },
+  { value: "milestone", label: "אבני דרך", emoji: "🎯" },
+  { value: "photo", label: "תמונות", emoji: "📸" },
+  { value: "video", label: "סרטונים", emoji: "🎥" },
+  { value: "story", label: "סיפורים", emoji: "📖" },
+  { value: "audio", label: "הקלטות", emoji: "🎵" },
 ];
 
-const categories: { value: MemoryCategory | 'all'; label: string }[] = [
-  { value: 'all', label: 'כל הקטגוריות' },
-  { value: 'יחסים', label: 'יחסים' },
-  { value: 'משפחה', label: 'משפחה' },
-  { value: 'נסיעות', label: 'נסיעות' },
-  { value: 'הישגים', label: 'הישגים' },
-  { value: 'אירועי חיים', label: 'אירועי חיים' }
+const categories: { value: MemoryCategory | "all"; label: string }[] = [
+  { value: "all", label: "כל הקטגוריות" },
+  { value: "בילויים", label: "בילויים" },
+  { value: "משפחה", label: "משפחה" },
+  { value: "נסיעות", label: "נסיעות" },
+  { value: "הישגים", label: "הישגים" },
+  { value: "אירועי חיים", label: "אירועי חיים" },
 ];
 
 export const SearchAndFilters = ({
@@ -45,15 +49,22 @@ export const SearchAndFilters = ({
   onToggleFavoritesOnly,
   onExport,
   onShowStats,
-  isDarkMode = false
+  isDarkMode = false,
 }: SearchAndFiltersProps) => {
   const [showFilters, setShowFilters] = useState(false);
 
   return (
-    <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 mb-8`}>
+    <div
+      className={`${
+        isDarkMode ? "bg-gray-800" : "bg-white"
+      } rounded-xl shadow-lg p-6 mb-8`}>
       {/* Search Bar */}
       <div className="relative mb-4">
-        <Search className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${isDarkMode ? 'text-gray-400' : 'text-gray-400'} w-5 h-5`} />
+        <Search
+          className={`absolute right-3 top-1/2 transform -translate-y-1/2 ${
+            isDarkMode ? "text-gray-400" : "text-gray-400"
+          } w-5 h-5`}
+        />
         <input
           type="text"
           placeholder="חיפוש זכרונות..."
@@ -61,15 +72,18 @@ export const SearchAndFilters = ({
           onChange={(e) => onSearchChange(e.target.value)}
           className={`w-full pr-10 pl-4 py-3 rounded-lg border ${
             isDarkMode
-              ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-rose-400'
-              : 'bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 focus:border-rose-500'
+              ? "bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-rose-400"
+              : "bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-500 focus:border-rose-500"
           } focus:outline-none transition-colors`}
         />
         {searchQuery && (
           <button
-            onClick={() => onSearchChange('')}
-            className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
-          >
+            onClick={() => onSearchChange("")}
+            className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${
+              isDarkMode
+                ? "text-gray-400 hover:text-gray-200"
+                : "text-gray-400 hover:text-gray-600"
+            }`}>
             <X className="w-4 h-4" />
           </button>
         )}
@@ -82,10 +96,9 @@ export const SearchAndFilters = ({
             onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
               isDarkMode
-                ? 'bg-gray-700 text-white hover:bg-gray-600'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            } transition-colors`}
-          >
+                ? "bg-gray-700 text-white hover:bg-gray-600"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            } transition-colors`}>
             <Filter className="w-4 h-4" />
             מסננים
           </button>
@@ -95,13 +108,12 @@ export const SearchAndFilters = ({
             className={`px-4 py-2 rounded-lg transition-colors ${
               showFavoritesOnly
                 ? isDarkMode
-                  ? 'bg-yellow-600 text-white'
-                  : 'bg-yellow-500 text-white'
+                  ? "bg-yellow-600 text-white"
+                  : "bg-yellow-500 text-white"
                 : isDarkMode
-                  ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
+                ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}>
             ⭐ מועדפים בלבד
           </button>
         </div>
@@ -111,10 +123,9 @@ export const SearchAndFilters = ({
             onClick={onShowStats}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
               isDarkMode
-                ? 'bg-blue-700 text-white hover:bg-blue-600'
-                : 'bg-blue-500 text-white hover:bg-blue-600'
-            } transition-colors`}
-          >
+                ? "bg-blue-700 text-white hover:bg-blue-600"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+            } transition-colors`}>
             <BarChart3 className="w-4 h-4" />
             סטטיסטיקות
           </button>
@@ -123,10 +134,9 @@ export const SearchAndFilters = ({
             onClick={onExport}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
               isDarkMode
-                ? 'bg-green-700 text-white hover:bg-green-600'
-                : 'bg-green-500 text-white hover:bg-green-600'
-            } transition-colors`}
-          >
+                ? "bg-green-700 text-white hover:bg-green-600"
+                : "bg-green-500 text-white hover:bg-green-600"
+            } transition-colors`}>
             <Download className="w-4 h-4" />
             יצוא
           </button>
@@ -139,7 +149,10 @@ export const SearchAndFilters = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Memory Types */}
             <div>
-              <h4 className={`font-medium mb-3 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              <h4
+                className={`font-medium mb-3 ${
+                  isDarkMode ? "text-white" : "text-gray-800"
+                }`}>
                 סוג זכרון
               </h4>
               <div className="grid grid-cols-2 gap-2">
@@ -150,13 +163,12 @@ export const SearchAndFilters = ({
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
                       selectedType === value
                         ? isDarkMode
-                          ? 'bg-rose-700 text-white'
-                          : 'bg-rose-500 text-white'
+                          ? "bg-rose-700 text-white"
+                          : "bg-rose-500 text-white"
                         : isDarkMode
-                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
+                        ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}>
                     <span>{emoji}</span>
                     {label}
                   </button>
@@ -166,7 +178,10 @@ export const SearchAndFilters = ({
 
             {/* Categories */}
             <div>
-              <h4 className={`font-medium mb-3 ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
+              <h4
+                className={`font-medium mb-3 ${
+                  isDarkMode ? "text-white" : "text-gray-800"
+                }`}>
                 קטגוריה
               </h4>
               <div className="space-y-2">
@@ -177,13 +192,12 @@ export const SearchAndFilters = ({
                     className={`block w-full text-right px-3 py-2 rounded-lg text-sm transition-colors ${
                       selectedCategory === value
                         ? isDarkMode
-                          ? 'bg-amber-700 text-white'
-                          : 'bg-amber-500 text-white'
+                          ? "bg-amber-700 text-white"
+                          : "bg-amber-500 text-white"
                         : isDarkMode
-                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
+                        ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}>
                     {label}
                   </button>
                 ))}

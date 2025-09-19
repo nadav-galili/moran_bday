@@ -13,183 +13,15 @@ import { DarkModeToggle } from "./components/DarkModeToggle";
 import type { Memory } from "./types/Memory";
 import { filterMemoriesByDecade } from "./utils/memoryUtils";
 import { useDarkMode } from "./hooks/useDarkMode";
-
-const sampleMemories: Memory[] = [
-  {
-    id: "1",
-    date: new Date("1985-09-24"),
-    title: "יום ההולדת הראשון שלך",
-    description: "התחלת המסע המדהים הזה - יום שבו הלב שלנו התמלא באור חדש.",
-    type: "milestone",
-    category: "אירועי חיים",
-    isFavorite: true,
-    tags: ["יום הולדת", "התחלות"],
-  },
-  {
-    id: "2",
-    date: new Date("2005-06-20"),
-    title: "הפגישה הראשונה",
-    description:
-      "היום שבו פגשנו לראשונה. מי היה יודע שזה יהיה תחילתו של סיפור אהבה כל כך יפה?",
-    type: "photo",
-    media: "/photos/first-meeting.svg",
-    category: "יחסים",
-    isFavorite: true,
-    tags: ["אהבה", "פגישה ראשונה", "רומנטיקה"],
-  },
-  {
-    id: "3",
-    date: new Date("2008-09-14"),
-    title: "החתונה שלנו",
-    description: "היום הכי יפה בחיים שלנו - התחלנו את המסע המשותף שלנו כמשפחה.",
-    type: "photo",
-    media: "/photos/wedding.jpg",
-    category: "יחסים",
-    isFavorite: true,
-    tags: ["חתונה", "זוגיות", "שמחה"],
-  },
-  {
-    id: "4",
-    date: new Date("2008-09-14"),
-    title: "הריקוד הראשון שלנו",
-    description: "הריקוד הראשון שלנו כזוג נשוי - רגע קסום שנשאר בלב לתמיד.",
-    type: "video",
-    media: "/videos/wedding-dance.mp4",
-    category: "יחסים",
-    isFavorite: true,
-    tags: ["חתונה", "ריקוד", "רומנטיקה"],
-  },
-  {
-    id: "5",
-    date: new Date("2009-02-14"),
-    title: "השיר שלנו",
-    description: "השיר שתמיד מזכיר לנו את ההתחלה היפה שלנו יחד.",
-    type: "audio",
-    audioPath: "/audio/love-song.mp3",
-    category: "יחסים",
-    isFavorite: true,
-    tags: ["מוזיקה", "אהבה", "זכרונות"],
-  },
-  {
-    id: "6",
-    date: new Date("2012-04-03"),
-    title: "לידת הילד הראשון",
-    description: "הרגע שבו הפכנו להורים. הרגש הכי עז שחווינו אי פעם.",
-    type: "milestone",
-    category: "משפחה",
-    isFavorite: true,
-    tags: ["לידה", "הורות", "ילדים"],
-  },
-  {
-    id: "7",
-    date: new Date("2013-08-15"),
-    title: "זמן משפחתי",
-    description: "רגעים יפים עם כל המשפחה. התחלת מסורות חדשות עם הילדים.",
-    type: "photo",
-    media: "/photos/family-time.svg",
-    category: "משפחה",
-    isFavorite: true,
-    tags: ["משפחה", "ילדים", "מסורות"],
-  },
-  {
-    id: "8",
-    date: new Date("2015-12-08"),
-    title: "נסיעה לאירופה",
-    description:
-      "החופשה הרומנטית הראשונה שלנו בזוגיות. זכרונות שחרוטים בלב לתמיד.",
-    type: "photo",
-    media: "/photos/europe-trip.svg",
-    category: "נסיעות",
-    isFavorite: false,
-    tags: ["חופשה", "אירופה", "רומנטיקה"],
-  },
-  {
-    id: "9",
-    date: new Date("2018-11-22"),
-    title: "קידום בעבודה",
-    description:
-      "הרגע שבו כל העבודה הקשה שלך הובילה להישג הגדול הזה. כל כך גאה בך!",
-    type: "milestone",
-    category: "הישגים",
-    isFavorite: false,
-    tags: ["קריירה", "הישגים", "עבודה"],
-  },
-  {
-    id: "10",
-    date: new Date("2020-03-01"),
-    title: "ברכות יום הולדת מהמשפחה",
-    description: "ברכות חמות ומלאות אהבה מכל המשפחה ליום הולדתך המיוחד.",
-    type: "audio",
-    audioPath: "/audio/birthday-wishes.mp3",
-    category: "משפחה",
-    isFavorite: false,
-    tags: ["יום הולדת", "משפחה", "ברכות"],
-  },
-  {
-    id: "11",
-    date: new Date("2021-05-20"),
-    title: "יום הולדת 36",
-    description: "חגיגה מיוחדת עם כל האנשים שאני הכי אוהבת.",
-    type: "video",
-    media: "/videos/birthday-36.mp4",
-    category: "אירועי חיים",
-    isFavorite: false,
-    tags: ["יום הולדת", "חגיגה", "שמחה"],
-  },
-  {
-    id: "12",
-    date: new Date("2022-07-10"),
-    title: "סיפורי משפחה",
-    description:
-      "הקלטה של סיפורים מתוקים על החיים שלנו יחד, שנרצה לזכור לתמיד.",
-    type: "audio",
-    audioPath: "/audio/family-stories.mp3",
-    category: "משפחה",
-    isFavorite: true,
-    tags: ["סיפורים", "משפחה", "זכרונות"],
-  },
-  {
-    id: "13",
-    date: new Date("2023-07-10"),
-    title: "הסיפור שלנו",
-    description:
-      "כתבתי לך את הסיפור של האהבה שלנו. כל מילה כתובה מהלב, כל זכרון שמור בנפש.",
-    type: "story",
-    category: "יחסים",
-    isFavorite: true,
-    tags: ["סיפור", "אהבה", "זכרונות"],
-  },
-  {
-    id: "14",
-    date: new Date("2024-01-15"),
-    title: "חגיגת יום הולדת מיוחדת",
-    description: "התחלה של שנה חדשה עם כל הרגעים הטובים שעוד בדרך.",
-    type: "photo",
-    media: "/photos/wedding.jpg",
-    category: "אירועי חיים",
-    isFavorite: true,
-    tags: ["יום הולדת", "חגיגה", "שנה חדשה"],
-  },
-  {
-    id: "15",
-    date: new Date("1995-06-15"),
-    title: "סיום התיכון",
-    description: "הסיום של תקופה ותחילת דרך חדשה מלאה באפשרויות.",
-    type: "photo",
-    media: "/photos/graduation.svg",
-    category: "הישגים",
-    isFavorite: false,
-    tags: ["סיום", "לימודים", "הישגים"],
-  },
-];
+import { myMemories } from "./lib/memories";
 
 const decades = ["1980s", "1990s", "2000s", "2010s", "2020s"];
 
 function App() {
   // State management
-  const [memories, setMemories] = useState<Memory[]>(sampleMemories);
+  const [memories, setMemories] = useState<Memory[]>(myMemories);
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
-  const [currentDecade, setCurrentDecade] = useState("2000s");
+  const [currentDecade, setCurrentDecade] = useState("1980s");
 
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useDarkMode();
@@ -275,21 +107,6 @@ function App() {
             מסע בזמן דרך כל הרגעים היפים, הזכרונות המתוקים והאהבה הגדולה שלנו
           </p>
         </header>
-        {/* Search and Filters
-        <SearchAndFilters
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedType={selectedType}
-          onTypeChange={setSelectedType}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          showFavoritesOnly={showFavoritesOnly}
-          onToggleFavoritesOnly={() => setShowFavoritesOnly(!showFavoritesOnly)}
-          onExport={handleExport}
-          onShowStats={() => setShowStatsModal(true)}
-          isDarkMode={isDarkMode}
-        /> */}
-        {/* Results Summary */}
 
         {/* Decade Navigation */}
         <div className="flex items-center justify-center mb-8">
