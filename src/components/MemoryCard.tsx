@@ -26,57 +26,61 @@ export const MemoryCard = ({
       }`}>
       <div
         className={`relative ${
-          isDarkMode ? "bg-gray-800" : "bg-white"
-        } rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105 max-w-md ${
+          isDarkMode
+            ? "bg-gradient-to-br from-purple-900/80 to-pink-900/80 backdrop-blur-sm border border-purple-500/30"
+            : "bg-gradient-to-br from-pink-50/90 to-purple-50/90 backdrop-blur-sm border border-pink-300/50"
+        } rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:scale-110 hover:rotate-1 max-w-md ${
           index % 2 === 0 ? "ml-8" : "mr-8"
         }`}
         onClick={() => onMemoryClick(memory)}>
         <div className="p-6">
           <div className="flex items-center gap-3 mb-3">
             <div
-              className={`p-2 rounded-full ${getTypeColor(
+              className={`p-3 rounded-full shadow-lg ${getTypeColor(
                 memory.type,
                 isDarkMode
-              )}`}>
-              <IconComponent className="w-4 h-4" />
+              )} transform hover:scale-110 transition-transform duration-300`}>
+              <IconComponent className="w-5 h-5" />
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <h3
-                  className={`text-lg font-semibold ${
+                  className={`text-xl font-bold ${
                     isDarkMode ? "text-white" : "text-gray-800"
-                  }`}>
+                  } bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent`}>
                   {memory.title}
                 </h3>
-                <div>
+                <div className="relative">
                   <img
-                    className="w-30 h-30 m-3 rounded-lg object-cover"
+                    className="w-32 h-32 m-3 rounded-xl object-cover shadow-lg border-2 border-pink-300/50 transform hover:scale-105 transition-transform duration-300"
                     src={memory.media}
                     alt={memory.title}
                   />
+                  {/* Decorative corner */}
+                  <div className="absolute top-0 right-0 w-6 h-6 bg-gradient-to-br from-pink-400 to-purple-400 rounded-bl-lg"></div>
                 </div>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onToggleFavorite(memory.id);
                   }}
-                  className={`p-1 rounded-full transition-colors ${
+                  className={`p-2 rounded-full transition-all duration-300 transform hover:scale-110 ${
                     memory.isFavorite
-                      ? "text-yellow-500 hover:text-yellow-600"
+                      ? "text-yellow-400 hover:text-yellow-300 bg-yellow-100/50"
                       : isDarkMode
-                      ? "text-gray-400 hover:text-yellow-500"
-                      : "text-gray-300 hover:text-yellow-500"
+                      ? "text-purple-300 hover:text-yellow-400 bg-purple-800/50 hover:bg-yellow-800/50"
+                      : "text-purple-400 hover:text-yellow-500 bg-purple-100/50 hover:bg-yellow-100/50"
                   }`}>
                   <Star
-                    className={`w-4 h-4 ${
-                      memory.isFavorite ? "fill-current" : ""
+                    className={`w-5 h-5 ${
+                      memory.isFavorite ? "fill-current animate-pulse" : ""
                     }`}
                   />
                 </button>
               </div>
               <p
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-300" : "text-gray-600"
+                className={`text-sm font-medium ${
+                  isDarkMode ? "text-purple-200" : "text-purple-600"
                 }`}>
                 {formatDate(memory.date)}
               </p>
@@ -84,29 +88,29 @@ export const MemoryCard = ({
           </div>
           <p
             className={`${
-              isDarkMode ? "text-gray-200" : "text-gray-700"
-            } line-clamp-2`}>
+              isDarkMode ? "text-purple-100" : "text-gray-700"
+            } line-clamp-2 text-base leading-relaxed`}>
             {memory.description}
           </p>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap gap-2">
             <span
-              className={`inline-block px-3 py-1 ${
+              className={`inline-block px-4 py-2 ${
                 isDarkMode
-                  ? "bg-amber-800 text-amber-200"
-                  : "bg-amber-100 text-amber-800"
-              } text-xs rounded-full`}>
+                  ? "bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-lg"
+                  : "bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-lg"
+              } text-sm font-semibold rounded-full transform hover:scale-105 transition-transform duration-300`}>
               {memory.category}
             </span>
             {memory.tags &&
               memory.tags.map((tag) => (
                 <span
                   key={tag}
-                  className={`inline-block px-2 py-1 ${
+                  className={`inline-block px-3 py-1 ${
                     isDarkMode
-                      ? "bg-gray-600 text-gray-200"
-                      : "bg-gray-100 text-gray-600"
-                  } text-xs rounded-full`}>
-                  {tag}
+                      ? "bg-gradient-to-r from-purple-700 to-pink-700 text-purple-200"
+                      : "bg-gradient-to-r from-purple-200 to-pink-200 text-purple-700"
+                  } text-sm rounded-full shadow-md transform hover:scale-105 transition-transform duration-300`}>
+                  #{tag}
                 </span>
               ))}
           </div>
@@ -114,13 +118,18 @@ export const MemoryCard = ({
 
         {/* Timeline dot */}
         <div
-          className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 ${
-            isDarkMode ? "bg-rose-400" : "bg-rose-500"
+          className={`absolute top-1/2 transform -translate-y-1/2 w-6 h-6 ${
+            isDarkMode
+              ? "bg-gradient-to-br from-pink-400 to-purple-400"
+              : "bg-gradient-to-br from-pink-500 to-purple-500"
           } border-4 ${
-            isDarkMode ? "border-gray-800" : "border-white"
-          } rounded-full shadow-lg ${
-            index % 2 === 0 ? "-right-10" : "-left-10"
-          }`}></div>
+            isDarkMode ? "border-purple-900" : "border-white"
+          } rounded-full shadow-xl animate-pulse ${
+            index % 2 === 0 ? "-right-12" : "-left-12"
+          }`}>
+          {/* Inner glow effect */}
+          <div className="absolute inset-1 bg-white/30 rounded-full"></div>
+        </div>
       </div>
     </div>
   );
