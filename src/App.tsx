@@ -15,13 +15,13 @@ import { filterMemoriesByDecade } from "./utils/memoryUtils";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { myMemories } from "./lib/memories";
 
-const decades = ["1980s", "1990s", "2000s", "2010s", "2020s"];
+const decades = ["2010s", "2020s"];
 
 function App() {
   // State management
   const [memories, setMemories] = useState<Memory[]>(myMemories);
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
-  const [currentDecade, setCurrentDecade] = useState("1980s");
+  const [currentDecade, setCurrentDecade] = useState("2010s");
 
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useDarkMode();

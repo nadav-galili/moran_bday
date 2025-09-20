@@ -77,12 +77,12 @@ export const MemoryModal = ({
           </div>
 
           {memory.media && (
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center items-center">
               {memory.type === "photo" ? (
                 <img
                   src={memory.media}
                   alt={memory.title}
-                  className="w-full h-64 object-contain rounded-lg"
+                  className="object-cover rounded-lg max-w-full max-h-96 mx-auto"
                 />
               ) : memory.type === "video" ? (
                 <video

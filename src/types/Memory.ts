@@ -6,7 +6,7 @@ export interface Memory {
   type: "milestone" | "photo" | "video" | "story" | "audio";
   media?: string;
   audioPath?: string;
-  category: "בילויים" | "משפחה" | "נסיעות" | "הישגים" | "אירועי חיים" | "טוני";
+  category: "בילויים" | "משפחה" | "נסיעות" | "חתונה" | "אירועי חיים" | "טוני";
   isFavorite?: boolean;
   tags?: string[];
 }

@@ -50,7 +50,7 @@ export const MemoryCard = ({
                 </h3>
                 <div>
                   <img
-                    className="w-30 h-30 rounded-lg object-cover"
+                    className="w-30 h-30 m-3 rounded-lg object-cover"
                     src={memory.media}
                     alt={memory.title}
                   />
