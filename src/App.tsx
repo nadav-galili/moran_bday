@@ -141,16 +141,16 @@ function App() {
       {/* Music Control */}
       <button
         onClick={toggleMusic}
-        className={`fixed top-4 left-4 z-50 p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 ${
+        className={`fixed top-2 left-2 sm:top-4 sm:left-4 z-50 p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 ${
           isDarkMode
             ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white"
             : "bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-300 hover:to-purple-300 text-white"
         }`}
         title={isMusicPlaying ? "Mute Music" : "Play Music"}>
         {isMusicPlaying ? (
-          <Volume2 className="w-5 h-5" />
+          <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
         ) : (
-          <VolumeX className="w-5 h-5" />
+          <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
         )}
       </button>
 
@@ -163,51 +163,51 @@ function App() {
         style={{ display: "none" }}
       />
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         {/* Header */}
-        <header className="text-center mb-12 relative">
+        <header className="text-center mb-8 sm:mb-12 relative">
           {/* Confetti Background */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div
-              className="absolute top-10 left-1/4 w-2 h-2 bg-pink-400 rounded-full animate-bounce"
+              className="absolute top-5 sm:top-10 left-1/4 w-1 sm:w-2 h-1 sm:h-2 bg-pink-400 rounded-full animate-bounce"
               style={{ animationDelay: "0s" }}></div>
             <div
-              className="absolute top-20 right-1/4 w-3 h-3 bg-yellow-400 rounded-full animate-bounce"
+              className="absolute top-10 sm:top-20 right-1/4 w-2 sm:w-3 h-2 sm:h-3 bg-yellow-400 rounded-full animate-bounce"
               style={{ animationDelay: "0.5s" }}></div>
             <div
-              className="absolute top-16 left-1/3 w-2 h-2 bg-purple-400 rounded-full animate-bounce"
+              className="absolute top-8 sm:top-16 left-1/3 w-1 sm:w-2 h-1 sm:h-2 bg-purple-400 rounded-full animate-bounce"
               style={{ animationDelay: "1s" }}></div>
             <div
-              className="absolute top-24 right-1/3 w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+              className="absolute top-12 sm:top-24 right-1/3 w-1 sm:w-2 h-1 sm:h-2 bg-blue-400 rounded-full animate-bounce"
               style={{ animationDelay: "1.5s" }}></div>
             <div
-              className="absolute top-12 left-1/2 w-3 h-3 bg-green-400 rounded-full animate-bounce"
+              className="absolute top-6 sm:top-12 left-1/2 w-2 sm:w-3 h-2 sm:h-3 bg-green-400 rounded-full animate-bounce"
               style={{ animationDelay: "2s" }}></div>
           </div>
 
           <h1
-            className={`text-6xl font-bold mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-pulse ${
+            className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent animate-pulse ${
               isDarkMode ? "drop-shadow-lg" : ""
             }`}>
             🎉 שביל הזכרונות שלנו 🎉
           </h1>
-          <div className="flex justify-center my-4">
-            <div className="border-5 border-pink-500 rounded-lg  flex items-center justify-center">
+          <div className="flex justify-center my-3 sm:my-4">
+            <div className="border-4 sm:border-5 border-pink-500 rounded-lg flex items-center justify-center">
               <img
                 src="/photos/queen.png"
                 alt="queen"
-                className="rounded-lg w-82 h-82"
+                className="rounded-lg w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-82 lg:h-82"
               />
             </div>
           </div>
           <p
-            className={`text-3xl mb-2 font-semibold ${
+            className={`text-lg sm:text-2xl md:text-3xl mb-2 font-semibold px-2 ${
               isDarkMode ? "text-pink-200" : "text-pink-600"
             }`}>
             ליום הולדתך-40 המיוחד 💕🎂✨
           </p>
           <p
-            className={`text-xl max-w-2xl mx-auto ${
+            className={`text-sm sm:text-lg md:text-xl max-w-2xl mx-auto px-2 ${
               isDarkMode ? "text-purple-200" : "text-purple-700"
             }`}>
             מסע בזמן דרך כל הרגעים היפים, הזכרונות המתוקים והאהבה הגדולה שלנו
@@ -216,11 +216,36 @@ function App() {
         </header>
 
         {/* Decade Navigation */}
-        <div className="flex items-center justify-center mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-center mb-6 sm:mb-8 gap-4 sm:gap-0">
+          {/* Mobile: Stack navigation buttons above title */}
+          <div className="flex items-center gap-4 sm:hidden">
+            <button
+              onClick={() => navigateDecade("prev")}
+              disabled={decades.indexOf(currentDecade) === 0}
+              className={`p-2 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-110 ${
+                isDarkMode
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white"
+                  : "bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-300 hover:to-purple-300 text-white"
+              }`}>
+              <ChevronRight className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => navigateDecade("next")}
+              disabled={decades.indexOf(currentDecade) === decades.length - 1}
+              className={`p-2 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-110 ${
+                isDarkMode
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white"
+                  : "bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-300 hover:to-purple-300 text-white"
+              }`}>
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Desktop: Side navigation buttons */}
           <button
             onClick={() => navigateDecade("prev")}
             disabled={decades.indexOf(currentDecade) === 0}
-            className={`p-3 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-110 ${
+            className={`hidden sm:block p-3 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-110 ${
               isDarkMode
                 ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white"
                 : "bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-300 hover:to-purple-300 text-white"
@@ -228,19 +253,19 @@ function App() {
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          <div className="mx-8 text-center">
+          <div className="mx-4 sm:mx-8 text-center">
             <h2
-              className={`text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent ${
+              className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent ${
                 isDarkMode ? "drop-shadow-lg" : ""
               }`}>
               שנות ה{currentDecade.slice(0, 4)} 🎂
             </h2>
-            <div className="flex gap-3 mt-4 justify-center flex-wrap">
+            <div className="flex gap-2 sm:gap-3 mt-3 sm:mt-4 justify-center flex-wrap">
               {decades.map((decade) => (
                 <button
                   key={decade}
                   onClick={() => scrollToDecade(decade)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg ${
+                  className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg ${
                     decade === currentDecade
                       ? isDarkMode
                         ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg"
@@ -258,7 +283,7 @@ function App() {
           <button
             onClick={() => navigateDecade("next")}
             disabled={decades.indexOf(currentDecade) === decades.length - 1}
-            className={`p-3 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-110 ${
+            className={`hidden sm:block p-3 rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-110 ${
               isDarkMode
                 ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white"
                 : "bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-300 hover:to-purple-300 text-white"
@@ -269,21 +294,25 @@ function App() {
         {/* Timeline */}
         <div ref={timelineRef} className="relative">
           <div
-            className={`absolute right-1/2 transform translate-x-1/2 w-2 rounded-full shadow-lg ${
+            className={`absolute right-1/2 transform translate-x-1/2 w-1 sm:w-2 rounded-full shadow-lg ${
               isDarkMode
                 ? "bg-gradient-to-b from-pink-500 via-purple-500 to-indigo-500"
                 : "bg-gradient-to-b from-pink-400 via-purple-400 to-indigo-400"
             }`}
             style={{ height: "calc(100% - 2rem)" }}></div>
 
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-6 md:space-y-8">
             {getCurrentDecadeMemories().length === 0 ? (
               <div
-                className={`text-center py-12 ${
+                className={`text-center py-8 sm:py-12 px-4 ${
                   isDarkMode ? "text-gray-400" : "text-gray-500"
                 }`}>
-                <p className="text-xl">אין זכרונות מתאימים בעשור זה</p>
-                <p className="mt-2">נסה לשנות את הסינון או לבחור עשור אחר</p>
+                <p className="text-lg sm:text-xl">
+                  אין זכרונות מתאימים בעשור זה
+                </p>
+                <p className="mt-2 text-sm sm:text-base">
+                  נסה לשנות את הסינון או לבחור עשור אחר
+                </p>
               </div>
             ) : (
               getCurrentDecadeMemories().map((memory, index) => (
@@ -318,7 +347,7 @@ function App() {
         )}
         {/* Footer */}
         <footer
-          className={`text-center mt-16 pt-8 border-t-2 ${
+          className={`text-center mt-8 sm:mt-12 md:mt-16 pt-6 sm:pt-8 border-t-2 px-4 ${
             isDarkMode
               ? "border-gradient-to-r from-pink-500 to-purple-500"
               : "border-gradient-to-r from-pink-300 to-purple-300"
@@ -327,30 +356,30 @@ function App() {
             {/* Floating hearts animation */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div
-                className="absolute top-0 left-1/4 text-2xl animate-bounce"
+                className="absolute top-0 left-1/4 text-lg sm:text-xl md:text-2xl animate-bounce"
                 style={{ animationDelay: "0s" }}>
                 💖
               </div>
               <div
-                className="absolute top-2 right-1/4 text-xl animate-bounce"
+                className="absolute top-1 sm:top-2 right-1/4 text-base sm:text-lg md:text-xl animate-bounce"
                 style={{ animationDelay: "0.7s" }}>
                 💕
               </div>
               <div
-                className="absolute top-1 left-1/2 text-lg animate-bounce"
+                className="absolute top-0 sm:top-1 left-1/2 text-sm sm:text-base md:text-lg animate-bounce"
                 style={{ animationDelay: "1.4s" }}>
                 💝
               </div>
             </div>
 
             <p
-              className={`text-2xl mb-3 font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent ${
+              className={`text-lg sm:text-xl md:text-2xl mb-2 sm:mb-3 font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent ${
                 isDarkMode ? "drop-shadow-lg" : ""
               }`}>
               💕 נוצר באהבה ליום הולדתך -40 המיוחד! 💕
             </p>
             <p
-              className={`text-lg ${
+              className={`text-sm sm:text-base md:text-lg ${
                 isDarkMode ? "text-purple-200" : "text-purple-600"
               }`}>
               כל זכרון כאן הוא חלק מהסיפור הנפלא שלנו יחד 🎂✨🌈
