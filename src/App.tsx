@@ -8,6 +8,7 @@ import { MemoryModal } from "./components/MemoryModal";
 import { StatsModal } from "./components/StatsModal";
 import { DarkModeToggle } from "./components/DarkModeToggle";
 import { ConfettiEffect } from "./components/ConfettiEffect";
+import { BirthdayCake } from "./components/BirthdayCake";
 
 // Types and utilities
 import type { Memory } from "./types/Memory";
@@ -26,7 +27,9 @@ function App() {
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useDarkMode();
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showWelcomeConfetti, setShowWelcomeConfetti] = useState(true);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [showBirthdayCake, setShowBirthdayCake] = useState(false);
   const timelineRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -57,6 +60,16 @@ function App() {
     }
   }, []);
 
+  // Welcome confetti effect on app mount
+  useEffect(() => {
+    // Hide welcome confetti after 5 seconds
+    const timer = setTimeout(() => {
+      setShowWelcomeConfetti(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const toggleMusic = () => {
     const audio = audioRef.current;
     if (audio) {
@@ -84,6 +97,11 @@ function App() {
   const triggerConfetti = () => {
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 3000);
+  };
+
+  const handleCandleBlow = () => {
+    // Trigger confetti when candles are blown out
+    triggerConfetti();
   };
 
   // Memory handlers
@@ -213,6 +231,30 @@ function App() {
             מסע בזמן דרך כל הרגעים היפים, הזכרונות המתוקים והאהבה הגדולה שלנו
             🌈💖
           </p>
+
+          {/* Birthday Cake */}
+          <div className="mt-6 sm:mt-8">
+            <button
+              onClick={() => setShowBirthdayCake(!showBirthdayCake)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 ${
+                isDarkMode
+                  ? "bg-gradient-to-r from-pink-600 to-purple-600 text-white hover:from-pink-500 hover:to-purple-500"
+                  : "bg-gradient-to-r from-pink-400 to-purple-400 text-white hover:from-pink-300 hover:to-purple-300"
+              } shadow-lg hover:shadow-xl`}>
+              {showBirthdayCake
+                ? "🎂 Hide Birthday Cake"
+                : "🎂 Show Birthday Cake"}
+            </button>
+
+            {showBirthdayCake && (
+              <div className="mt-4 animate-fade-in">
+                <BirthdayCake
+                  isDarkMode={isDarkMode}
+                  onCandleBlow={handleCandleBlow}
+                />
+              </div>
+            )}
+          </div>
         </header>
 
         {/* Decade Navigation */}
@@ -390,6 +432,9 @@ function App() {
 
       {/* Confetti Effect */}
       <ConfettiEffect isActive={showConfetti} />
+
+      {/* Welcome Confetti Effect */}
+      <ConfettiEffect isActive={showWelcomeConfetti} isWelcome={true} />
     </div>
   );
 }
