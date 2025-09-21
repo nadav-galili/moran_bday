@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 import "./App.css";
 
 // Components
@@ -26,11 +26,48 @@ function App() {
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [isDarkMode, setIsDarkMode] = useDarkMode();
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   // Get current decade memories
   const getCurrentDecadeMemories = () => {
     return filterMemoriesByDecade(memories, currentDecade);
+  };
+
+  // Audio management
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.loop = true;
+      audio.volume = 0.5; // Set volume to 50%
+
+      // Try to play the audio
+      const playAudio = async () => {
+        try {
+          await audio.play();
+          setIsMusicPlaying(true);
+        } catch {
+          console.log("Autoplay blocked, music will start on user interaction");
+          setIsMusicPlaying(false);
+        }
+      };
+
+      playAudio();
+    }
+  }, []);
+
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      if (isMusicPlaying) {
+        audio.pause();
+        setIsMusicPlaying(false);
+      } else {
+        audio.play();
+        setIsMusicPlaying(true);
+      }
+    }
   };
 
   // Navigation handlers
@@ -101,6 +138,31 @@ function App() {
         onToggle={() => setIsDarkMode(!isDarkMode)}
       />
 
+      {/* Music Control */}
+      <button
+        onClick={toggleMusic}
+        className={`fixed top-4 left-4 z-50 p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-110 ${
+          isDarkMode
+            ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white"
+            : "bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-300 hover:to-purple-300 text-white"
+        }`}
+        title={isMusicPlaying ? "Mute Music" : "Play Music"}>
+        {isMusicPlaying ? (
+          <Volume2 className="w-5 h-5" />
+        ) : (
+          <VolumeX className="w-5 h-5" />
+        )}
+      </button>
+
+      {/* Hidden Audio Element */}
+      <audio
+        ref={audioRef}
+        src="/audio/lovesong.mp3"
+        preload="auto"
+        loop
+        style={{ display: "none" }}
+      />
+
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <header className="text-center mb-12 relative">
@@ -129,6 +191,15 @@ function App() {
             }`}>
             🎉 שביל הזכרונות שלנו 🎉
           </h1>
+          <div className="flex justify-center my-4">
+            <div className="border-5 border-pink-500 rounded-lg  flex items-center justify-center">
+              <img
+                src="/photos/queen.png"
+                alt="queen"
+                className="rounded-lg w-82 h-82"
+              />
+            </div>
+          </div>
           <p
             className={`text-3xl mb-2 font-semibold ${
               isDarkMode ? "text-pink-200" : "text-pink-600"
